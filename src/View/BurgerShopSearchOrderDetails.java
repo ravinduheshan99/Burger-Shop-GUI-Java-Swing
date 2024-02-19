@@ -66,6 +66,11 @@ public class BurgerShopSearchOrderDetails extends JFrame {
         btnSearch.setBounds(330, 150, 100, 20);
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
+            orders oid = Controller.searchOrder(txtOrdIdRes.getText());
+            if(oid==null){
+                JOptionPane.showMessageDialog(null,"Invalid Order Id");
+                clear();
+            }else{
            orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
            customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
            lblCusIdRes.setText(obj2.getCustomerId());
@@ -73,7 +78,7 @@ public class BurgerShopSearchOrderDetails extends JFrame {
            lblQTYRes.setText(obj1.getOrderQty()+"");
            lblTotalRes.setText(obj1.getOrderValue()+"0");
            lblOrdStatusRes.setText(Controller.getStatusText(obj1.getOrderStatus()));
-           
+        }
         });
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

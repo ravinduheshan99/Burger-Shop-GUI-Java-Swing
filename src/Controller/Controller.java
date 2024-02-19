@@ -59,6 +59,17 @@ public class Controller {
             System.out.println("Your Order is Placed Successfully");
             
     }
+    
+    public static String check(String cusId){
+        String cusName = "";
+            for (int i = 0; i < dbcus.size(); i++) {
+                if (cusId.equals(dbcus.get(i).getCustomerId())) {
+                    cusName = dbcus.get(i).getCustomerName();
+                    return cusName;
+                }
+            }
+            return null;
+    }
 
     public static void bestCustomer() {
         L20:

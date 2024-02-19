@@ -41,7 +41,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         lblTitle1.setOpaque(true);
         add(lblTitle1);
 
-        lblEnterCusId = new JLabel("Enter OrderID : ");
+        lblEnterCusId = new JLabel("Enter Customer ID : ");
         lblEnterCusId.setFont(new Font("", Font.BOLD, 15));
         lblEnterCusId.setForeground(Color.black);
         lblEnterCusId.setBounds(100, 100, 150, 20);
@@ -50,29 +50,36 @@ public class BurgerShopSearchCustomer extends JFrame {
         txtCusIdRes = new JTextField("");
         txtCusIdRes.setFont(new Font("", Font.BOLD, 15));
         txtCusIdRes.setForeground(Color.black);
-        txtCusIdRes.setBounds(220, 100, 150, 20);
+        txtCusIdRes.setBounds(250, 100, 150, 20);
         add(txtCusIdRes);
         
         btnSearch = new JButton("Search");
         btnSearch.setBackground(color);
         btnSearch.setForeground(Color.white);
         btnSearch.setFont(new Font("SANS_SERIF", 1, 15));
-        btnSearch.setBounds(380, 100, 100, 20);
+        btnSearch.setBounds(410, 100, 100, 20);
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
-           customer obj1 = Controller.searchCustomer(txtCusIdRes.getText());
-           lblNameRes.setText(obj1.getCustomerName());
-           
-           for(int i=0; i<Controller.dbcus.size(); i++){
-               if(txtCusIdRes.getText().equals(obj1.getCustomerId())){
-                   int index = i;
-                   orders obj2 = Controller.dbord.get(i);
-                   Object[] rowData = {obj2.getOrderId(), obj2.getOrderQty()+"", obj2.getOrderValue()+"0"};
+            customer cid = Controller.searchCustomer(txtCusIdRes.getText());
+            if(cid==null){
+                JOptionPane.showMessageDialog(null,"Customer Does Not Exists.");
+                clear();
+            }else if(txtCusIdRes.getText().equals(cid.getCustomerId())){
+                   lblNameRes.setText(cid.getCustomerName());
+                   for(int i=0; i<Controller.dbcus.size(); i++){
+                   customer obj2 = Controller.dbcus.get(i);
+                   if(obj2.getCustomerId().equals(txtCusIdRes.getText())){
+                   orders obj3 = Controller.dbord.get(i);
+                   Object[] rowData = {obj3.getOrderId(), obj3.getOrderQty()+"", obj3.getOrderValue()+"0"};
                    dtm.addRow(rowData);
-               }
-           }
-           
-           
+                   }else{
+                   
+                   } 
+              }
+            }else{
+                JOptionPane.showMessageDialog(null,"Invalid Customer Id.");
+                clear();
+            }
         });
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

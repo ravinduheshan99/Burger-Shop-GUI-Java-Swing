@@ -16,6 +16,7 @@ public class BurgerShopPlaceOrder extends JFrame {
     private JLabel lblOrdIdRes;
     private JLabel lblCusId;
     private JTextField txtCusRes;
+    private JButton btnCheck;
     private JLabel lblName;
     private JTextField txtNameRes;
     private JLabel lblHr1;
@@ -72,6 +73,20 @@ public class BurgerShopPlaceOrder extends JFrame {
         txtCusRes.setForeground(Color.black);
         txtCusRes.setBounds(200, 200, 100, 20);
         add(txtCusRes);
+        
+        btnCheck = new JButton("Check");
+        btnCheck.setFont(new Font("", Font.BOLD, 12));
+        btnCheck.setForeground(Color.black);
+        btnCheck.setBounds(310, 200, 70, 20);
+        add(btnCheck);
+        btnCheck.addActionListener(evt->{
+            String cname = Controller.check(txtCusRes.getText());
+            if(cname==null){
+                JOptionPane.showMessageDialog(null,"Customer Does Not Exists.");
+            }else{
+                 txtNameRes.setText(cname);
+            }
+        });
         
         lblName = new JLabel("Name            : ");
         lblName.setFont(new Font("", Font.BOLD, 15));
@@ -134,9 +149,17 @@ public class BurgerShopPlaceOrder extends JFrame {
         btnPlaceOrder.setBounds(520, 150, 200, 40);
         add(btnPlaceOrder);
         btnPlaceOrder.addActionListener(evt -> {
-        Controller.placeOrder(lblOrdIdRes.getText(), txtCusRes.getText(), txtNameRes.getText(), Integer.parseInt(txtQTYRes.getText()));
-        clear();
+        Object[] options = {"Yes","No"};
+        int n = JOptionPane.showOptionDialog(null,"Do you want to place this order?",null, JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,options,options[1]);
+        if(n==0){
+            Controller.placeOrder(lblOrdIdRes.getText(), txtCusRes.getText(), txtNameRes.getText(), Integer.parseInt(txtQTYRes.getText()));
+         JOptionPane.showMessageDialog(null,"Your Order is Placed Successfully");  
+            clear();
         nextOid();
+        }else{
+            
+        }
+        
         });
         btnPlaceOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -177,7 +200,7 @@ public class BurgerShopPlaceOrder extends JFrame {
         btnCancel.setBounds(520, 330, 200, 40);
         add(btnCancel);
         btnCancel.addActionListener(evt -> {
-
+            clear();
         });
         btnCancel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
