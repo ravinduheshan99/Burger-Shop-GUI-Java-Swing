@@ -1,6 +1,7 @@
 package View;
 
-import static Controller.Controller.*;
+import Controller.Controller;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -13,11 +14,14 @@ public class BurgerShopPlaceOrder extends JFrame {
     private JLabel lblTitle;
     private JLabel lblOrdId;
     private JLabel lblOrdIdRes;
-    private JLabel lblHr1;
     private JLabel lblCusId;
     private JTextField txtCusRes;
+    private JLabel lblName;
+    private JTextField txtNameRes;
+    private JLabel lblHr1;
     private JLabel lblOrdQty;
     private JTextField txtQTYRes;
+    private JButton btnAddQty;
     private JLabel lblOrdStatus;
     private JLabel lblOrdStatusRes;
     private JLabel lblNetTotal;
@@ -50,7 +54,7 @@ public class BurgerShopPlaceOrder extends JFrame {
         add(lblOrdId);
 
         //Order Id Placeholder
-        lblOrdIdRes = new JLabel(generateOrderId());
+        lblOrdIdRes = new JLabel(Controller.generateOrderId());
         lblOrdIdRes.setFont(new Font("", Font.BOLD, 15));
         lblOrdIdRes.setForeground(Color.black);
         lblOrdIdRes.setBounds(200, 150, 100, 20);
@@ -68,37 +72,59 @@ public class BurgerShopPlaceOrder extends JFrame {
         txtCusRes.setForeground(Color.black);
         txtCusRes.setBounds(200, 200, 100, 20);
         add(txtCusRes);
+        
+        lblName = new JLabel("Name            : ");
+        lblName.setFont(new Font("", Font.BOLD, 15));
+        lblName.setForeground(Color.black);
+        lblName.setBounds(100, 250, 100, 20);
+        add(lblName);
+        
+        txtNameRes = new JTextField("");
+        txtNameRes.setFont(new Font("", Font.BOLD, 15));
+        txtNameRes.setForeground(Color.black);
+        txtNameRes.setBounds(200, 250, 100, 20);
+        add(txtNameRes);
 
         lblHr1 = new JLabel("---------------------------------------------------------------------------------------");
         lblHr1.setFont(new Font("", Font.PLAIN, 15));
         lblHr1.setForeground(Color.black);
-        lblHr1.setBounds(50, 250, 500, 20);
+        lblHr1.setBounds(50, 300, 500, 20);
         add(lblHr1);
 
         lblOrdQty = new JLabel("Burger QTY  : ");
         lblOrdQty.setFont(new Font("", Font.BOLD, 15));
         lblOrdQty.setForeground(Color.black);
-        lblOrdQty.setBounds(100, 300, 110, 20);
+        lblOrdQty.setBounds(100, 350, 110, 20);
         add(lblOrdQty);
 
         //QTY Placeholder
         txtQTYRes = new JTextField();
         txtQTYRes.setFont(new Font("", Font.BOLD, 15));
         txtQTYRes.setForeground(Color.black);
-        txtQTYRes.setBounds(203, 300, 100, 20);
+        txtQTYRes.setBounds(203, 350, 100, 20);
         add(txtQTYRes);
+        
+        btnAddQty = new JButton("+");
+        btnAddQty.setFont(new Font("", Font.BOLD, 15));
+        btnAddQty.setForeground(Color.black);
+        btnAddQty.setBounds(310, 350, 50, 20);
+        add(btnAddQty);
+        btnAddQty.addActionListener(evt->{
+             lblNetTotalRes.setText(Controller.BURGERPRICE*Integer.parseInt(txtQTYRes.getText())+"0");
+             lblOrdStatusRes.setText("Preparing");
+        });
 
         lblOrdStatus = new JLabel("Order Status : ");
         lblOrdStatus.setFont(new Font("", Font.BOLD, 15));
         lblOrdStatus.setForeground(Color.black);
-        lblOrdStatus.setBounds(100, 350, 150, 20);
+        lblOrdStatus.setBounds(100, 400, 150, 20);
         add(lblOrdStatus);
 
         //Ord Status Placeholder
-        lblOrdStatusRes = new JLabel("Preparing");
+        lblOrdStatusRes = new JLabel("");
         lblOrdStatusRes.setFont(new Font("", Font.BOLD, 15));
         lblOrdStatusRes.setForeground(Color.black);
-        lblOrdStatusRes.setBounds(203, 350, 100, 20);
+        lblOrdStatusRes.setBounds(203, 400, 100, 20);
         add(lblOrdStatusRes);
 
         btnPlaceOrder = new JButton("Place Order");
@@ -108,7 +134,9 @@ public class BurgerShopPlaceOrder extends JFrame {
         btnPlaceOrder.setBounds(520, 150, 200, 40);
         add(btnPlaceOrder);
         btnPlaceOrder.addActionListener(evt -> {
-
+        Controller.placeOrder(lblOrdIdRes.getText(), txtCusRes.getText(), txtNameRes.getText(), Integer.parseInt(txtQTYRes.getText()));
+        clear();
+        nextOid();
         });
         btnPlaceOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -168,10 +196,20 @@ public class BurgerShopPlaceOrder extends JFrame {
         lblNetTotal.setBounds(520, 450, 150, 20);
         add(lblNetTotal);
 
-        lblNetTotalRes = new JLabel("7500.00");
+        lblNetTotalRes = new JLabel("");
         lblNetTotalRes.setFont(new Font("", Font.BOLD, 15));
         lblNetTotalRes.setForeground(color);
         lblNetTotalRes.setBounds(620, 450, 150, 20);
         add(lblNetTotalRes);
+    }
+     private void clear(){
+        txtCusRes.setText(null);
+        txtNameRes.setText(null);
+        txtQTYRes.setText(null);
+        lblNetTotalRes.setText(null);
+        lblOrdStatusRes.setText(null);
+    }
+    private void nextOid(){
+        lblOrdIdRes.setText(Controller.generateOrderId());
     }
 }

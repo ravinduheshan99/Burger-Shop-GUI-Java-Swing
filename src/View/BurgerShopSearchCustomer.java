@@ -1,5 +1,8 @@
 package View;
 
+import Controller.Controller;
+import Model.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -12,6 +15,7 @@ public class BurgerShopSearchCustomer extends JFrame {
     private JLabel lblTitle1;
     private JLabel lblEnterCusId;
     private JTextField txtCusIdRes;
+    private JButton btnSearch;
     private JLabel lblName;
     private JLabel lblNameRes;
     private JLabel lblTitle2;
@@ -43,11 +47,44 @@ public class BurgerShopSearchCustomer extends JFrame {
         lblEnterCusId.setBounds(100, 100, 150, 20);
         add(lblEnterCusId);
 
-        txtCusIdRes = new JTextField("C0001");
+        txtCusIdRes = new JTextField("");
         txtCusIdRes.setFont(new Font("", Font.BOLD, 15));
         txtCusIdRes.setForeground(Color.black);
         txtCusIdRes.setBounds(220, 100, 150, 20);
         add(txtCusIdRes);
+        
+        btnSearch = new JButton("Search");
+        btnSearch.setBackground(color);
+        btnSearch.setForeground(Color.white);
+        btnSearch.setFont(new Font("SANS_SERIF", 1, 15));
+        btnSearch.setBounds(380, 100, 100, 20);
+        add(btnSearch);
+        btnSearch.addActionListener(evt -> {
+           customer obj1 = Controller.searchCustomer(txtCusIdRes.getText());
+           lblNameRes.setText(obj1.getCustomerName());
+           
+           for(int i=0; i<Controller.dbcus.size(); i++){
+               if(txtCusIdRes.getText().equals(obj1.getCustomerId())){
+                   int index = i;
+                   orders obj2 = Controller.dbord.get(i);
+                   Object[] rowData = {obj2.getOrderId(), obj2.getOrderQty()+"", obj2.getOrderValue()+"0"};
+                   dtm.addRow(rowData);
+               }
+           }
+           
+           
+        });
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(colorg);
+                btnSearch.setForeground(Color.black);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(color);
+                btnSearch.setForeground(Color.white);
+            }
+        });
 
         lblName = new JLabel("Name   : ");
         lblName.setFont(new Font("", Font.BOLD, 15));
@@ -55,7 +92,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         lblName.setBounds(150, 150, 100, 20);
         add(lblName);
 
-        lblNameRes = new JLabel("Saman Kumara");
+        lblNameRes = new JLabel("");
         lblNameRes.setFont(new Font("", Font.BOLD, 15));
         lblNameRes.setForeground(Color.black);
         lblNameRes.setBounds(218, 150, 120, 20);
@@ -79,13 +116,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         JScrollPane tablePane = new JScrollPane(tblOrd);
         tablePane.setBounds(100, 280, 600, 200);  // Set the position and size of the scroll pane
         add(tablePane);
-        // Add sample data to the table
-        Object[] rowData1 = {"O001", "5", 2530.00};
-        dtm.addRow(rowData1);
-        Object[] rowData2 = {"O002", "5", 2530.00};
-        dtm.addRow(rowData2);
-        Object[] rowData3 = {"O003", "5", 2530.00};
-        dtm.addRow(rowData3);
+        
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < tblOrd.getColumnCount(); i++) {
@@ -120,7 +151,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         btnClear.setBounds(670, 500, 100, 40);
         add(btnClear);
         btnClear.addActionListener(evt -> {
-
+            clear();
         });
         btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -133,5 +164,10 @@ public class BurgerShopSearchCustomer extends JFrame {
             }
         });
 
+    }
+    private void clear(){
+           txtCusIdRes.setText(null);
+           lblNameRes.setText(null);
+           dtm.setRowCount(0);
     }
 }

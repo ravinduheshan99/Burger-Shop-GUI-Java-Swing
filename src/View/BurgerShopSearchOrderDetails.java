@@ -1,5 +1,8 @@
 package View;
 
+import Controller.Controller;
+import Model.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -12,6 +15,7 @@ public class BurgerShopSearchOrderDetails extends JFrame {
     private JLabel lblTitle;
     private JLabel lblEnterOrdId;
     private JTextField txtOrdIdRes;
+    private JButton btnSearch;
     private JLabel lblCusId;
     private JLabel lblCusIdRes;
     private JLabel lblName;
@@ -54,65 +58,93 @@ public class BurgerShopSearchOrderDetails extends JFrame {
         txtOrdIdRes.setForeground(Color.black);
         txtOrdIdRes.setBounds(220, 150, 100, 20);
         add(txtOrdIdRes);
+        
+        btnSearch = new JButton("Search");
+        btnSearch.setBackground(color);
+        btnSearch.setForeground(Color.white);
+        btnSearch.setFont(new Font("SANS_SERIF", 1, 15));
+        btnSearch.setBounds(330, 150, 100, 20);
+        add(btnSearch);
+        btnSearch.addActionListener(evt -> {
+           orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
+           customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
+           lblCusIdRes.setText(obj2.getCustomerId());
+           lblNameRes.setText(obj2.getCustomerName());
+           lblQTYRes.setText(obj1.getOrderQty()+"");
+           lblTotalRes.setText(obj1.getOrderValue()+"0");
+           lblOrdStatusRes.setText(Controller.getStatusText(obj1.getOrderStatus()));
+           
+        });
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(colorg);
+                btnSearch.setForeground(Color.black);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(color);
+                btnSearch.setForeground(Color.white);
+            }
+        });
 
         lblCusId = new JLabel("Customer ID : ");
         lblCusId.setFont(new Font("", Font.BOLD, 15));
         lblCusId.setForeground(Color.black);
-        lblCusId.setBounds(150, 220, 100, 20);
+        lblCusId.setBounds(220, 220, 100, 20);
         add(lblCusId);
 
-        lblCusIdRes = new JLabel("C0001");
+        lblCusIdRes = new JLabel("");
         lblCusIdRes.setFont(new Font("", Font.BOLD, 15));
         lblCusIdRes.setForeground(Color.black);
-        lblCusIdRes.setBounds(250, 220, 100, 20);
+        lblCusIdRes.setBounds(320, 220, 100, 20);
         add(lblCusIdRes);
 
-        lblName = new JLabel("Name : ");
+        lblName = new JLabel("Name             : ");
         lblName.setFont(new Font("", Font.BOLD, 15));
         lblName.setForeground(Color.black);
-        lblName.setBounds(150, 260, 100, 20);
+        lblName.setBounds(220, 260, 100, 20);
         add(lblName);
 
-        lblNameRes = new JLabel("Saman Kumara");
+        lblNameRes = new JLabel("");
         lblNameRes.setFont(new Font("", Font.BOLD, 15));
         lblNameRes.setForeground(Color.black);
-        lblNameRes.setBounds(200, 260, 150, 20);
+        lblNameRes.setBounds(320, 260, 150, 20);
         add(lblNameRes);
 
-        lblQTY = new JLabel("QTY : ");
+        lblQTY = new JLabel("QTY               : ");
         lblQTY.setFont(new Font("", Font.BOLD, 15));
         lblQTY.setForeground(Color.black);
-        lblQTY.setBounds(150, 300, 100, 20);
+        lblQTY.setBounds(220, 300, 100, 20);
         add(lblQTY);
 
-        lblQTYRes = new JLabel("20");
+        lblQTYRes = new JLabel("");
         lblQTYRes.setFont(new Font("", Font.BOLD, 15));
         lblQTYRes.setForeground(Color.black);
-        lblQTYRes.setBounds(200, 300, 100, 20);
+        lblQTYRes.setBounds(320, 300, 100, 20);
         add(lblQTYRes);
 
-        lblTotal = new JLabel("Total :");
+        lblTotal = new JLabel("Total              :");
         lblTotal.setFont(new Font("", Font.BOLD, 15));
         lblTotal.setForeground(Color.black);
-        lblTotal.setBounds(150, 340, 100, 20);
+        lblTotal.setBounds(220, 340, 100, 20);
         add(lblTotal);
 
-        lblTotalRes = new JLabel("7500.00");
+        lblTotalRes = new JLabel("");
         lblTotalRes.setFont(new Font("", Font.BOLD, 15));
         lblTotalRes.setForeground(Color.black);
-        lblTotalRes.setBounds(200, 340, 100, 20);
+        lblTotalRes.setBounds(320, 340, 100, 20);
         add(lblTotalRes);
 
         lblOrdStatus = new JLabel("Order Status : ");
         lblOrdStatus.setFont(new Font("", Font.BOLD, 15));
         lblOrdStatus.setForeground(Color.black);
-        lblOrdStatus.setBounds(150, 380, 150, 20);
+        lblOrdStatus.setBounds(220, 380, 150, 20);
         add(lblOrdStatus);
 
-        lblOrdStatusRes = new JLabel("Preparing");
+        lblOrdStatusRes = new JLabel("");
         lblOrdStatusRes.setFont(new Font("", Font.BOLD, 15));
         lblOrdStatusRes.setForeground(Color.black);
-        lblOrdStatusRes.setBounds(250, 380, 150, 20);
+        lblOrdStatusRes.setBounds(320, 380, 150, 20);
         add(lblOrdStatusRes);
 
         btnBack = new JButton("Back");
@@ -130,6 +162,7 @@ public class BurgerShopSearchOrderDetails extends JFrame {
                 btnBack.setBackground(colorg);
                 btnBack.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnBack.setBackground(color);
                 btnBack.setForeground(Color.white);
@@ -143,18 +176,26 @@ public class BurgerShopSearchOrderDetails extends JFrame {
         btnClear.setBounds(670, 500, 100, 40);
         add(btnClear);
         btnClear.addActionListener(evt -> {
-
+            clear();
         });
         btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnClear.setBackground(colorg);
                 btnClear.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnClear.setBackground(color);
                 btnClear.setForeground(Color.white);
             }
         });
-
+    }
+     private void clear(){
+           txtOrdIdRes.setText(null);
+           lblCusIdRes.setText(null);
+           lblNameRes.setText(null);
+           lblQTYRes.setText(null);
+           lblTotalRes.setText(null);
+           lblOrdStatusRes.setText(null);
     }
 }

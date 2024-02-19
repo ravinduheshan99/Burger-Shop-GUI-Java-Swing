@@ -1,5 +1,8 @@
 package View;
 
+import Controller.Controller;
+import Model.*;
+
 import javax.swing.*;
 import javax.swing.table.*;
 import java.awt.*;
@@ -10,20 +13,23 @@ public class BurgerShopUpdateOrder extends JFrame {
     Color color = new Color(191, 49, 49);
     Color colorg = new Color(101, 183, 65);
     private JLabel lblTitle;
+    private JLabel lblEnterOrdId;
+    private JTextField txtOrdIdRes;
+    private JButton btnSearch;
     private JLabel lblOrdStatus;
     private JComboBox OrdStatus;
-    private JLabel lblOrdId;
-    private JTextField txtOrdIdRes;
     private JLabel lblCusId;
     private JTextField txtCusIdRes;
     private JLabel lblName;
     private JTextField txtNameRes;
     private JLabel lblQTY;
     private JTextField txtQTYRes;
+    private JButton btnAddQty;
     private JLabel lblTot;
     private JLabel lblTotRes;
     private JButton btnBack;
     private JButton btnUpdate;
+    private JButton btnClear;
 
     public BurgerShopUpdateOrder() {
         setTitle("Update Order");
@@ -41,88 +47,135 @@ public class BurgerShopUpdateOrder extends JFrame {
         lblTitle.setBackground(color);
         lblTitle.setOpaque(true);
         add(lblTitle);
+        
+        lblEnterOrdId = new JLabel("Enter OrderID : ");
+        lblEnterOrdId.setFont(new Font("", Font.BOLD, 15));
+        lblEnterOrdId.setForeground(Color.black);
+        lblEnterOrdId.setBounds(100, 150, 150, 20);
+        add(lblEnterOrdId);
 
-        lblOrdStatus = new JLabel("Order Status");
+        //Order Id Placeholder
+        txtOrdIdRes = new JTextField();
+        txtOrdIdRes.setFont(new Font("", Font.BOLD, 15));
+        txtOrdIdRes.setForeground(Color.black);
+        txtOrdIdRes.setBounds(210, 150, 100, 20);
+        add(txtOrdIdRes);
+        
+        btnSearch = new JButton("Search");
+        btnSearch.setBackground(color);
+        btnSearch.setForeground(Color.white);
+        btnSearch.setFont(new Font("SANS_SERIF", 1, 15));
+        btnSearch.setBounds(320, 150, 100, 20);
+        add(btnSearch);
+        btnSearch.addActionListener(evt -> {
+           orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
+           customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
+           txtCusIdRes.setText(obj2.getCustomerId());
+           txtNameRes.setText(obj2.getCustomerName());
+           txtQTYRes.setText(obj1.getOrderQty()+"");
+           lblTotRes.setText(obj1.getOrderValue()+"0");
+           String Status="";
+           if(obj1.getOrderStatus()==0){
+               OrdStatus.setSelectedItem("Preparing");
+           }else if(obj1.getOrderStatus()==1){
+               OrdStatus.setSelectedItem("Delivered");
+           }else if(obj1.getOrderStatus()==2){
+               OrdStatus.setSelectedItem("Cancel");
+           }
+        });
+        btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(colorg);
+                btnSearch.setForeground(Color.black);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnSearch.setBackground(color);
+                btnSearch.setForeground(Color.white);
+            }
+        });
+
+        lblOrdStatus = new JLabel("Order Status  : ");
         lblOrdStatus.setFont(new Font("", Font.BOLD, 15));
         lblOrdStatus.setForeground(Color.black);
-        lblOrdStatus.setBounds(100, 150, 150, 20);
+        lblOrdStatus.setBounds(100, 200, 150, 20);
         add(lblOrdStatus);
 
         String[] Status = {"Preparing", "Delivered", "Cancel"};
         OrdStatus = new JComboBox(Status);
         OrdStatus.setFont(new Font("", Font.BOLD, 13));
         OrdStatus.setForeground(Color.black);
-        OrdStatus.setBounds(200, 150, 150, 20);
+        OrdStatus.setBounds(210, 200, 150, 20);
         add(OrdStatus);
 
-        lblOrdId = new JLabel("Order Id");
-        lblOrdId.setFont(new Font("", Font.BOLD, 15));
-        lblOrdId.setForeground(Color.black);
-        lblOrdId.setBounds(100, 200, 100, 20);
-        add(lblOrdId);
-
-        txtOrdIdRes = new JTextField("00001");
-        txtOrdIdRes.setFont(new Font("", Font.BOLD, 15));
-        txtOrdIdRes.setForeground(Color.black);
-        txtOrdIdRes.setBounds(200, 200, 150, 20);
-        add(txtOrdIdRes);
-
-        lblCusId = new JLabel("Customer Id");
+        lblCusId = new JLabel("Customer Id   : ");
         lblCusId.setFont(new Font("", Font.BOLD, 15));
         lblCusId.setForeground(Color.black);
         lblCusId.setBounds(100, 250, 150, 20);
         add(lblCusId);
 
-        txtCusIdRes = new JTextField("C0001");
+        txtCusIdRes = new JTextField("");
         txtCusIdRes.setFont(new Font("", Font.BOLD, 15));
         txtCusIdRes.setForeground(Color.black);
-        txtCusIdRes.setBounds(200, 250, 150, 20);
+        txtCusIdRes.setBounds(210, 250, 150, 20);
         add(txtCusIdRes);
 
-        lblName = new JLabel("Name");
+        lblName = new JLabel("Name              : ");
         lblName.setFont(new Font("", Font.BOLD, 15));
         lblName.setForeground(Color.black);
         lblName.setBounds(100, 300, 150, 20);
         add(lblName);
 
-        txtNameRes = new JTextField("Saman Kumara");
+        txtNameRes = new JTextField("");
         txtNameRes.setFont(new Font("", Font.BOLD, 15));
         txtNameRes.setForeground(Color.black);
-        txtNameRes.setBounds(200, 300, 150, 20);
+        txtNameRes.setBounds(210, 300, 150, 20);
         add(txtNameRes);
 
-        lblQTY = new JLabel("Order QTY");
+        lblQTY = new JLabel("Order QTY     : ");
         lblQTY.setFont(new Font("", Font.BOLD, 15));
         lblQTY.setForeground(Color.black);
         lblQTY.setBounds(100, 350, 150, 20);
         add(lblQTY);
 
-        txtQTYRes = new JTextField("20");
+        txtQTYRes = new JTextField("");
         txtQTYRes.setFont(new Font("", Font.BOLD, 15));
         txtQTYRes.setForeground(Color.black);
-        txtQTYRes.setBounds(200, 350, 150, 20);
+        txtQTYRes.setBounds(210, 350, 150, 20);
         add(txtQTYRes);
+        
+        btnAddQty = new JButton("+");
+        btnAddQty.setFont(new Font("", Font.BOLD, 15));
+        btnAddQty.setForeground(Color.black);
+        btnAddQty.setBounds(370, 350, 50, 20);
+        add(btnAddQty);
+        btnAddQty.addActionListener(evt->{
+             lblTotRes.setText(Controller.BURGERPRICE*Integer.parseInt(txtQTYRes.getText())+"0");
+        });
 
-        lblTot = new JLabel("Total");
+        lblTot = new JLabel("Total                : ");
         lblTot.setFont(new Font("", Font.BOLD, 15));
         lblTot.setForeground(Color.black);
-        lblTot.setBounds(100, 400, 100, 20);
+        lblTot.setBounds(100, 400, 110, 20);
         add(lblTot);
 
-        lblTotRes = new JLabel("7500.00");
+        lblTotRes = new JLabel("");
         lblTotRes .setFont(new Font("", Font.BOLD, 15));
         lblTotRes .setForeground(color);
-        lblTotRes .setBounds(200, 400, 100, 20);
+        lblTotRes .setBounds(210, 400, 100, 20);
         add(lblTotRes );
 
         btnUpdate = new JButton("Update Order");
         btnUpdate.setBackground(color);
         btnUpdate.setForeground(Color.white);
         btnUpdate.setFont(new Font("SANS_SERIF", 1, 15));
-        btnUpdate.setBounds(500, 500, 150, 40);
+        btnUpdate.setBounds(350, 500, 150, 40);
         add(btnUpdate);
         btnUpdate.addActionListener(evt -> {
-
+                int status = ordStatus();
+                Controller.updateOrderDetails(txtOrdIdRes.getText(), status, Integer.parseInt(txtQTYRes.getText()));
+                clear();
+                OrdStatus.setSelectedItem("Preparing");
         });
         btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -132,6 +185,27 @@ public class BurgerShopUpdateOrder extends JFrame {
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnUpdate.setBackground(color);
                 btnUpdate.setForeground(Color.white);
+            }
+        });
+        
+        btnClear = new JButton("Clear");
+        btnClear.setBackground(color);
+        btnClear.setForeground(Color.white);
+        btnClear.setFont(new Font("SANS_SERIF", 1, 15));
+        btnClear.setBounds(535, 500, 100, 40);
+        add(btnClear);
+        btnClear.addActionListener(evt -> {
+            clear();
+        });
+        btnClear.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnClear.setBackground(colorg);
+                btnClear.setForeground(Color.black);
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                btnClear.setBackground(color);
+                btnClear.setForeground(Color.white);
             }
         });
 
@@ -156,5 +230,24 @@ public class BurgerShopUpdateOrder extends JFrame {
             }
         });
 
+    }
+    
+    public int ordStatus(){
+        if(OrdStatus.getSelectedItem().equals("Preparing")){
+            return 0;
+        }else if(OrdStatus.getSelectedItem().equals("Delivered")){
+            return 1;
+        }else if(OrdStatus.getSelectedItem().equals("Cancel")){
+            return 2;
+        }
+        return -1;
+    }
+    
+    private void clear(){
+        txtOrdIdRes.setText(null);
+        txtCusIdRes.setText(null);
+        txtNameRes.setText(null);
+        txtQTYRes.setText(null);
+        lblTotRes.setText(null);
     }
 }
