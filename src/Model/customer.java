@@ -10,6 +10,7 @@ package Model;
  * @author Ravindu Haputhanthri
  */
 public class customer {
+
     private String customerId;
     private String customerName;
     private double total;

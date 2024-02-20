@@ -6,8 +6,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
 
-public class BurgerShopHome extends JFrame{
-    
+public class BurgerShopHome extends JFrame {
+
     private JButton btnPlaceOrder;
     private JButton btnSearchBestCustomer;
     private JButton btnSearchOrder;
@@ -21,11 +21,10 @@ public class BurgerShopHome extends JFrame{
     private JPanel headerPanel;
     Color color = new Color(191, 49, 49);
     Color color2 = new Color(255, 195, 0);
-    Color colorg = new Color(101,183,65);
-
+    Color colorg = new Color(101, 183, 65);
 
     // Create an ImageIcon from the specified image file
-    ImageIcon imgHome = new ImageIcon("D:\\Documents\\Self Learning Courses\\iCM-106-iCET\\Modules\\05-OOP\\Assignments\\Courseworks\\Week 04\\Images\\1.jpg");
+    ImageIcon imgHome = new ImageIcon("D:\\Documents\\Self Learning Courses\\iCM-106-iCET\\Modules\\05-OOP\\Assignments\\Courseworks\\Week 04 -NetBeans\\BurgerShopGUI\\Images\\1.jpg");
     // Get the Image object from the ImageIcon and scale it to 300x300 pixels with smooth scaling
     Image scaledImage = imgHome.getImage().getScaledInstance(370, 510, Image.SCALE_SMOOTH);
     // Create a new ImageIcon with the scaled Image
@@ -65,6 +64,7 @@ public class BurgerShopHome extends JFrame{
                 btnPlaceOrder.setBackground(colorg);
                 btnPlaceOrder.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnPlaceOrder.setBackground(color);
                 btnPlaceOrder.setForeground(Color.white);
@@ -85,6 +85,7 @@ public class BurgerShopHome extends JFrame{
                 btnSearchBestCustomer.setBackground(colorg);
                 btnSearchBestCustomer.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSearchBestCustomer.setBackground(color);
                 btnSearchBestCustomer.setForeground(Color.white);
@@ -106,6 +107,7 @@ public class BurgerShopHome extends JFrame{
                 btnSearchOrder.setBackground(colorg);
                 btnSearchOrder.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSearchOrder.setBackground(color);
                 btnSearchOrder.setForeground(Color.white);
@@ -127,6 +129,7 @@ public class BurgerShopHome extends JFrame{
                 btnSearchCustomer.setBackground(colorg);
                 btnSearchCustomer.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSearchCustomer.setBackground(color);
                 btnSearchCustomer.setForeground(Color.white);
@@ -147,6 +150,7 @@ public class BurgerShopHome extends JFrame{
                 btnViewOrder.setBackground(colorg);
                 btnViewOrder.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnViewOrder.setBackground(color);
                 btnViewOrder.setForeground(Color.white);
@@ -168,6 +172,7 @@ public class BurgerShopHome extends JFrame{
                 btnUpdateOrder.setBackground(colorg);
                 btnUpdateOrder.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnUpdateOrder.setBackground(color);
                 btnUpdateOrder.setForeground(Color.white);
@@ -188,6 +193,7 @@ public class BurgerShopHome extends JFrame{
                 btnExit.setBackground(colorg);
                 btnExit.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnExit.setBackground(color);
                 btnExit.setForeground(Color.white);

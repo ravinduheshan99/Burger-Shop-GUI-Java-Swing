@@ -10,8 +10,9 @@ import java.awt.event.*;
 import java.util.*;
 
 public class BurgerShopSearchOrderDetails extends JFrame {
+
     Color color = new Color(191, 49, 49);
-    Color colorg = new Color(101,183,65);
+    Color colorg = new Color(101, 183, 65);
     private JLabel lblTitle;
     private JLabel lblEnterOrdId;
     private JTextField txtOrdIdRes;
@@ -58,7 +59,7 @@ public class BurgerShopSearchOrderDetails extends JFrame {
         txtOrdIdRes.setForeground(Color.black);
         txtOrdIdRes.setBounds(220, 150, 100, 20);
         add(txtOrdIdRes);
-        
+
         btnSearch = new JButton("Search");
         btnSearch.setBackground(color);
         btnSearch.setForeground(Color.white);
@@ -67,18 +68,18 @@ public class BurgerShopSearchOrderDetails extends JFrame {
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
             orders oid = Controller.searchOrder(txtOrdIdRes.getText());
-            if(oid==null){
-                JOptionPane.showMessageDialog(null,"Invalid Order Id");
+            if (oid == null) {
+                JOptionPane.showMessageDialog(null, "Invalid Order Id");
                 clear();
-            }else{
-           orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
-           customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
-           lblCusIdRes.setText(obj2.getCustomerId());
-           lblNameRes.setText(obj2.getCustomerName());
-           lblQTYRes.setText(obj1.getOrderQty()+"");
-           lblTotalRes.setText(obj1.getOrderValue()+"0");
-           lblOrdStatusRes.setText(Controller.getStatusText(obj1.getOrderStatus()));
-        }
+            } else {
+                orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
+                customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
+                lblCusIdRes.setText(obj2.getCustomerId());
+                lblNameRes.setText(obj2.getCustomerName());
+                lblQTYRes.setText(obj1.getOrderQty() + "");
+                lblTotalRes.setText(obj1.getOrderValue() + "0");
+                lblOrdStatusRes.setText(Controller.getStatusText(obj1.getOrderStatus()));
+            }
         });
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -195,12 +196,13 @@ public class BurgerShopSearchOrderDetails extends JFrame {
             }
         });
     }
-     private void clear(){
-           txtOrdIdRes.setText(null);
-           lblCusIdRes.setText(null);
-           lblNameRes.setText(null);
-           lblQTYRes.setText(null);
-           lblTotalRes.setText(null);
-           lblOrdStatusRes.setText(null);
+
+    private void clear() {
+        txtOrdIdRes.setText(null);
+        lblCusIdRes.setText(null);
+        lblNameRes.setText(null);
+        lblQTYRes.setText(null);
+        lblTotalRes.setText(null);
+        lblOrdStatusRes.setText(null);
     }
 }

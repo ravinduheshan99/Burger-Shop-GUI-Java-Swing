@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class BurgerShopUpdateOrder extends JFrame {
+
     Color color = new Color(191, 49, 49);
     Color colorg = new Color(101, 183, 65);
     private JLabel lblTitle;
@@ -47,7 +48,7 @@ public class BurgerShopUpdateOrder extends JFrame {
         lblTitle.setBackground(color);
         lblTitle.setOpaque(true);
         add(lblTitle);
-        
+
         lblEnterOrdId = new JLabel("Enter OrderID : ");
         lblEnterOrdId.setFont(new Font("", Font.BOLD, 15));
         lblEnterOrdId.setForeground(Color.black);
@@ -60,7 +61,7 @@ public class BurgerShopUpdateOrder extends JFrame {
         txtOrdIdRes.setForeground(Color.black);
         txtOrdIdRes.setBounds(210, 150, 100, 20);
         add(txtOrdIdRes);
-        
+
         btnSearch = new JButton("Search");
         btnSearch.setBackground(color);
         btnSearch.setForeground(Color.white);
@@ -68,20 +69,26 @@ public class BurgerShopUpdateOrder extends JFrame {
         btnSearch.setBounds(320, 150, 100, 20);
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
-           orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
-           customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
-           txtCusIdRes.setText(obj2.getCustomerId());
-           txtNameRes.setText(obj2.getCustomerName());
-           txtQTYRes.setText(obj1.getOrderQty()+"");
-           lblTotRes.setText(obj1.getOrderValue()+"0");
-           String Status="";
-           if(obj1.getOrderStatus()==0){
-               OrdStatus.setSelectedItem("Preparing");
-           }else if(obj1.getOrderStatus()==1){
-               OrdStatus.setSelectedItem("Delivered");
-           }else if(obj1.getOrderStatus()==2){
-               OrdStatus.setSelectedItem("Cancel");
-           }
+            orders oid = Controller.searchOrder(txtOrdIdRes.getText());
+            if (oid == null) {
+                JOptionPane.showMessageDialog(null, "Invalid Order Id");
+                clear();
+            } else {
+                orders obj1 = Controller.searchOrder(txtOrdIdRes.getText());
+                customer obj2 = Controller.searchCus(txtOrdIdRes.getText());
+                txtCusIdRes.setText(obj2.getCustomerId());
+                txtNameRes.setText(obj2.getCustomerName());
+                txtQTYRes.setText(obj1.getOrderQty() + "");
+                lblTotRes.setText(obj1.getOrderValue() + "0");
+                String Status = "";
+                if (obj1.getOrderStatus() == 0) {
+                    OrdStatus.setSelectedItem("Preparing");
+                } else if (obj1.getOrderStatus() == 1) {
+                    OrdStatus.setSelectedItem("Delivered");
+                } else if (obj1.getOrderStatus() == 2) {
+                    OrdStatus.setSelectedItem("Cancel");
+                }
+            }
         });
         btnSearch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -143,14 +150,14 @@ public class BurgerShopUpdateOrder extends JFrame {
         txtQTYRes.setForeground(Color.black);
         txtQTYRes.setBounds(210, 350, 150, 20);
         add(txtQTYRes);
-        
+
         btnAddQty = new JButton("+");
         btnAddQty.setFont(new Font("", Font.BOLD, 15));
         btnAddQty.setForeground(Color.black);
         btnAddQty.setBounds(370, 350, 50, 20);
         add(btnAddQty);
-        btnAddQty.addActionListener(evt->{
-             lblTotRes.setText(Controller.BURGERPRICE*Integer.parseInt(txtQTYRes.getText())+"0");
+        btnAddQty.addActionListener(evt -> {
+            lblTotRes.setText(Controller.BURGERPRICE * Integer.parseInt(txtQTYRes.getText()) + "0");
         });
 
         lblTot = new JLabel("Total                : ");
@@ -160,10 +167,10 @@ public class BurgerShopUpdateOrder extends JFrame {
         add(lblTot);
 
         lblTotRes = new JLabel("");
-        lblTotRes .setFont(new Font("", Font.BOLD, 15));
-        lblTotRes .setForeground(color);
-        lblTotRes .setBounds(210, 400, 100, 20);
-        add(lblTotRes );
+        lblTotRes.setFont(new Font("", Font.BOLD, 15));
+        lblTotRes.setForeground(color);
+        lblTotRes.setBounds(210, 400, 100, 20);
+        add(lblTotRes);
 
         btnUpdate = new JButton("Update Order");
         btnUpdate.setBackground(color);
@@ -172,22 +179,30 @@ public class BurgerShopUpdateOrder extends JFrame {
         btnUpdate.setBounds(350, 500, 150, 40);
         add(btnUpdate);
         btnUpdate.addActionListener(evt -> {
+            Object[] options = {"Yes", "No"};
+            int n = JOptionPane.showOptionDialog(null, "Do you want to Update this order?", null, JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+            if (n == 0) {
                 int status = ordStatus();
                 Controller.updateOrderDetails(txtOrdIdRes.getText(), status, Integer.parseInt(txtQTYRes.getText()));
+                JOptionPane.showMessageDialog(null, "Your Order is Updated Successfully");
                 clear();
                 OrdStatus.setSelectedItem("Preparing");
+            } else {
+
+            }
         });
         btnUpdate.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnUpdate.setBackground(colorg);
                 btnUpdate.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnUpdate.setBackground(color);
                 btnUpdate.setForeground(Color.white);
             }
         });
-        
+
         btnClear = new JButton("Clear");
         btnClear.setBackground(color);
         btnClear.setForeground(Color.white);
@@ -224,6 +239,7 @@ public class BurgerShopUpdateOrder extends JFrame {
                 btnBack.setBackground(colorg);
                 btnBack.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnBack.setBackground(color);
                 btnBack.setForeground(Color.white);
@@ -231,19 +247,19 @@ public class BurgerShopUpdateOrder extends JFrame {
         });
 
     }
-    
-    public int ordStatus(){
-        if(OrdStatus.getSelectedItem().equals("Preparing")){
+
+    public int ordStatus() {
+        if (OrdStatus.getSelectedItem().equals("Preparing")) {
             return 0;
-        }else if(OrdStatus.getSelectedItem().equals("Delivered")){
+        } else if (OrdStatus.getSelectedItem().equals("Delivered")) {
             return 1;
-        }else if(OrdStatus.getSelectedItem().equals("Cancel")){
+        } else if (OrdStatus.getSelectedItem().equals("Cancel")) {
             return 2;
         }
         return -1;
     }
-    
-    private void clear(){
+
+    private void clear() {
         txtOrdIdRes.setText(null);
         txtCusIdRes.setText(null);
         txtNameRes.setText(null);

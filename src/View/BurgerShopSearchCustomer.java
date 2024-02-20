@@ -10,6 +10,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class BurgerShopSearchCustomer extends JFrame {
+
     Color color = new Color(191, 49, 49);
     Color colorg = new Color(101, 183, 65);
     private JLabel lblTitle1;
@@ -52,7 +53,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         txtCusIdRes.setForeground(Color.black);
         txtCusIdRes.setBounds(250, 100, 150, 20);
         add(txtCusIdRes);
-        
+
         btnSearch = new JButton("Search");
         btnSearch.setBackground(color);
         btnSearch.setForeground(Color.white);
@@ -61,23 +62,23 @@ public class BurgerShopSearchCustomer extends JFrame {
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
             customer cid = Controller.searchCustomer(txtCusIdRes.getText());
-            if(cid==null){
-                JOptionPane.showMessageDialog(null,"Customer Does Not Exists.");
+            if (cid == null) {
+                JOptionPane.showMessageDialog(null, "Customer Does Not Exists.");
                 clear();
-            }else if(txtCusIdRes.getText().equals(cid.getCustomerId())){
-                   lblNameRes.setText(cid.getCustomerName());
-                   for(int i=0; i<Controller.dbcus.size(); i++){
-                   customer obj2 = Controller.dbcus.get(i);
-                   if(obj2.getCustomerId().equals(txtCusIdRes.getText())){
-                   orders obj3 = Controller.dbord.get(i);
-                   Object[] rowData = {obj3.getOrderId(), obj3.getOrderQty()+"", obj3.getOrderValue()+"0"};
-                   dtm.addRow(rowData);
-                   }else{
-                   
-                   } 
-              }
-            }else{
-                JOptionPane.showMessageDialog(null,"Invalid Customer Id.");
+            } else if (txtCusIdRes.getText().equals(cid.getCustomerId())) {
+                lblNameRes.setText(cid.getCustomerName());
+                for (int i = 0; i < Controller.dbcus.size(); i++) {
+                    customer obj2 = Controller.dbcus.get(i);
+                    if (obj2.getCustomerId().equals(txtCusIdRes.getText())) {
+                        orders obj3 = Controller.dbord.get(i);
+                        Object[] rowData = {obj3.getOrderId(), obj3.getOrderQty() + "", obj3.getOrderValue() + "0"};
+                        dtm.addRow(rowData);
+                    } else {
+
+                    }
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Invalid Customer Id.");
                 clear();
             }
         });
@@ -123,7 +124,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         JScrollPane tablePane = new JScrollPane(tblOrd);
         tablePane.setBounds(100, 280, 600, 200);  // Set the position and size of the scroll pane
         add(tablePane);
-        
+
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < tblOrd.getColumnCount(); i++) {
@@ -145,6 +146,7 @@ public class BurgerShopSearchCustomer extends JFrame {
                 btnBack.setBackground(colorg);
                 btnBack.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnBack.setBackground(color);
                 btnBack.setForeground(Color.white);
@@ -165,6 +167,7 @@ public class BurgerShopSearchCustomer extends JFrame {
                 btnClear.setBackground(colorg);
                 btnClear.setForeground(Color.black);
             }
+
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnClear.setBackground(color);
                 btnClear.setForeground(Color.white);
@@ -172,9 +175,10 @@ public class BurgerShopSearchCustomer extends JFrame {
         });
 
     }
-    private void clear(){
-           txtCusIdRes.setText(null);
-           lblNameRes.setText(null);
-           dtm.setRowCount(0);
+
+    private void clear() {
+        txtCusIdRes.setText(null);
+        lblNameRes.setText(null);
+        dtm.setRowCount(0);
     }
 }

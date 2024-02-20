@@ -7,6 +7,7 @@ import Model.orders;
 import java.util.*;
 
 public class Controller {
+
     public static ListCus dbcus = new ListCus();
     public static ListOrd dbord = new ListOrd();
 
@@ -19,7 +20,7 @@ public class Controller {
         if (dbcus.size() == 0) {
             return "B0001";
         }
-        String lastOrderId = dbord.get(dbord.size()-1).getOrderId();
+        String lastOrderId = dbord.get(dbord.size() - 1).getOrderId();
         int number = Integer.parseInt(lastOrderId.split("B")[1]);
         number++;
         return String.format("B%04d", number);
@@ -54,21 +55,20 @@ public class Controller {
     }
 
     public static void placeOrder(String oid, String cid, String cname, int oqty) {
-            dbcus.add(new customer(cid, cname));
-            dbord.add(new orders(oid, 0, oqty, (oqty * BURGERPRICE)));
-            System.out.println("Your Order is Placed Successfully");
-            
+        dbcus.add(new customer(cid, cname));
+        dbord.add(new orders(oid, 0, oqty, (oqty * BURGERPRICE)));
+        System.out.println("Your Order is Placed Successfully");
     }
-    
-    public static String check(String cusId){
+
+    public static String check(String cusId) {
         String cusName = "";
-            for (int i = 0; i < dbcus.size(); i++) {
-                if (cusId.equals(dbcus.get(i).getCustomerId())) {
-                    cusName = dbcus.get(i).getCustomerName();
-                    return cusName;
-                }
+        for (int i = 0; i < dbcus.size(); i++) {
+            if (cusId.equals(dbcus.get(i).getCustomerId())) {
+                cusName = dbcus.get(i).getCustomerName();
+                return cusName;
             }
-            return null;
+        }
+        return null;
     }
 
     public static void bestCustomer() {
@@ -164,45 +164,45 @@ public class Controller {
     }
 
     public static orders searchOrder(String oid) {
-            String orderId = oid;
-            for (int i = 0; i < dbord.size(); i++) {
-                if (orderId.equals(dbord.get(i).getOrderId())) {
-                    return dbord.get(i);
-                }
+        String orderId = oid;
+        for (int i = 0; i < dbord.size(); i++) {
+            if (orderId.equals(dbord.get(i).getOrderId())) {
+                return dbord.get(i);
             }
-            return null;
+        }
+        return null;
     }
-    
+
     public static customer searchCus(String oid) {
-            String orderId = oid;
-            for (int i = 0; i < dbord.size(); i++) {
-                if (orderId.equals(dbord.get(i).getOrderId())) {
-                    return dbcus.get(i);
-                }
+        String orderId = oid;
+        for (int i = 0; i < dbord.size(); i++) {
+            if (orderId.equals(dbord.get(i).getOrderId())) {
+                return dbcus.get(i);
             }
-            return null;
+        }
+        return null;
     }
 
     public static customer searchCustomer(String cid) {
-            String res5 = cid;
-                for (int i = 0; i < dbcus.size(); i++) {
-                    if (res5.equals(dbcus.get(i).getCustomerId())) {
-                    return dbcus.get(i);
-             }       
+        String res5 = cid;
+        for (int i = 0; i < dbcus.size(); i++) {
+            if (res5.equals(dbcus.get(i).getCustomerId())) {
+                return dbcus.get(i);
+            }
         }
-                return null;
+        return null;
     }
-    
+
     public static orders searchCusOrdDtl(String cid) {
-            String res5 = cid;
-                for (int i = 0; i < dbcus.size(); i++) {
-                    if (res5.equals(dbcus.get(i).getCustomerId())) {
-                    return dbord.get(i);
-             }       
+        String res5 = cid;
+        for (int i = 0; i < dbcus.size(); i++) {
+            if (res5.equals(dbcus.get(i).getCustomerId())) {
+                return dbord.get(i);
+            }
         }
-                return null;
+        return null;
     }
-    
+
     public static void viewOrders() {
         L4:
         while (true) {
@@ -248,7 +248,6 @@ public class Controller {
                             continue L3;
                         }
                     }
-
 
                 } else if (ans2 == 2) {
                     System.out.println("________________________________________________________________________________");
@@ -315,14 +314,12 @@ public class Controller {
                     continue L5;
                 }
             }
-
         }
-
     }
 
     public static void updateOrderDetails(String oid, int ordStatus, int qty) {
-            for (int i = 0; i < dbord.size(); i++) {
-                if (oid.equals(dbord.get(i).getOrderId())) {
+        for (int i = 0; i < dbord.size(); i++) {
+            if (oid.equals(dbord.get(i).getOrderId())) {
                 int value1 = qty;
                 dbord.get(i).setOrderQty(value1);
                 dbord.get(i).setOrderValue(value1 * BURGERPRICE);
@@ -330,7 +327,7 @@ public class Controller {
                 int value2 = ordStatus;
                 dbord.get(i).setOrderStatus(value2);
                 System.out.println("\n\tUpdate order status successfully");
-              }
+            }
         }
     }
 

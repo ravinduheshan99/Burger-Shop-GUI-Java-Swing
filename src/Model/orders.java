@@ -10,6 +10,7 @@ package Model;
  * @author Ravindu Haputhanthri
  */
 public class orders {
+
     private String orderId;
     private int orderStatus;
     private int orderQty;
