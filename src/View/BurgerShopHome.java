@@ -78,14 +78,14 @@ public class BurgerShopHome extends JFrame {
         btnSearchBestCustomer.setBounds(470, 160, 200, 40);
         add(btnSearchBestCustomer);
         btnSearchBestCustomer.addActionListener(evt -> {
-
+            new BurgerShopBestCustomer().setVisible(true);
+            dispose();
         });
         btnSearchBestCustomer.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnSearchBestCustomer.setBackground(colorg);
                 btnSearchBestCustomer.setForeground(Color.black);
             }
-
             public void mouseExited(java.awt.event.MouseEvent evt) {
                 btnSearchBestCustomer.setBackground(color);
                 btnSearchBestCustomer.setForeground(Color.white);
@@ -143,7 +143,8 @@ public class BurgerShopHome extends JFrame {
         btnViewOrder.setBounds(470, 340, 200, 40);
         add(btnViewOrder);
         btnViewOrder.addActionListener(evt -> {
-
+            new BurgerShopViewOrders().setVisible(true);
+            dispose();
         });
         btnViewOrder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {

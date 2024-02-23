@@ -126,6 +126,7 @@ public class BurgerShopUpdateOrder extends JFrame {
         txtCusIdRes.setForeground(Color.black);
         txtCusIdRes.setBounds(210, 250, 150, 20);
         add(txtCusIdRes);
+        txtCusIdRes.setEditable(false);
 
         lblName = new JLabel("Name              : ");
         lblName.setFont(new Font("", Font.BOLD, 15));
@@ -138,6 +139,7 @@ public class BurgerShopUpdateOrder extends JFrame {
         txtNameRes.setForeground(Color.black);
         txtNameRes.setBounds(210, 300, 150, 20);
         add(txtNameRes);
+        txtNameRes.setEditable(false);
 
         lblQTY = new JLabel("Order QTY     : ");
         lblQTY.setFont(new Font("", Font.BOLD, 15));

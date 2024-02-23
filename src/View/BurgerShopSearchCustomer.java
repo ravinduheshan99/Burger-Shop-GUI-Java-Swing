@@ -61,6 +61,7 @@ public class BurgerShopSearchCustomer extends JFrame {
         btnSearch.setBounds(410, 100, 100, 20);
         add(btnSearch);
         btnSearch.addActionListener(evt -> {
+            dtm.setRowCount(0);
             customer cid = Controller.searchCustomer(txtCusIdRes.getText());
             if (cid == null) {
                 JOptionPane.showMessageDialog(null, "Customer Does Not Exists.");
